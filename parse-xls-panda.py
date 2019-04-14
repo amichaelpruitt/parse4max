@@ -109,13 +109,27 @@ def outputExcelReport(filename, sheet, data):
   book = xlwt.Workbook()
   sh = book.add_sheet(sheet)
   
-  i = 0
-  sh.write(i,0,data["client"])
-  sh.write(i,1,data["jobNumber"])
-
+  sh.write(0,0,data["client"])
+  sh.write(0,1,data["jobNumber"])
+  rowNumber = 1
+  colNumber = 0
   for section in data["sections"]:
-    i += 1
-    print("section: " + str(section))
+    rowNumber = 1
+    print("SECTION: " + str(section))
+    print("COL: " + str(colNumber))
+    print("ROW: " + str(rowNumber))
+    sh.write(rowNumber,colNumber,section)
+
+    rowNumber = 2
+    for item in data["sections"][section]:
+      print("  ITEM: " + str(item["AssetNumber"]))
+      print("  COL: " + str(colNumber))
+      print("  ROW: " + str(rowNumber))
+      # sh.write(rowNumber,colNumber,data["sections"][section][item]["AssetNumber"])
+      sh.write(rowNumber,colNumber,item["AssetNumber"])
+      rowNumber += 1
+
+    colNumber += 1
     # if isinstance(data[key], collections.Mapping):
     #   pass
     # else:
